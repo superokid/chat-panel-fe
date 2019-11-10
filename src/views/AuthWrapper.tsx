@@ -1,19 +1,14 @@
 import React from 'react';
-import { Router, Switch, Route } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import Login from './Login';
-import Chat from './Chat';
-import Dashboard from './Dashboard';
-
-const history = createBrowserHistory();
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { routes } from 'modules/router';
 
 const AuthWrapper: React.FC = () => {
   return (
-    <Router history={history}>
+    <Router>
       <Switch>
-        <Route path="/" component={Login} exact></Route>
-        <Route path="/chat" component={Chat} exact></Route>
-        <Route path="/dashboard" component={Dashboard} exact></Route>
+        {routes.map((item, i) => {
+          return <Route key={i} path={item.path} component={item.component} exact={item.exact} />;
+        })}
       </Switch>
     </Router>
   );

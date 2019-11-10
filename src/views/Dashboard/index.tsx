@@ -14,7 +14,9 @@ import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems } from './Layout/Sidebar';
+import { Switch, Route } from 'react-router-dom';
+import { sidebarRoutes } from 'modules/router';
+import Sidebar from './Layout/Sidebar';
 
 const drawerWidth = 240;
 
@@ -144,12 +146,18 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <Sidebar />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          content
+          <Switch>
+            {sidebarRoutes.map((item, i) => {
+              return <Route key={i} path={item.path} component={item.component} exact />;
+            })}
+          </Switch>
         </Container>
       </main>
     </div>
