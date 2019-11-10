@@ -1,15 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getStaff } from 'store/staffs/action';
+import { AppState } from 'store/root-reducer';
+import Staffs from './units';
 
-const Staffs: React.FC<RouteComponentProps> = ({ match }) => {
-  const { path } = match;
-  return (
-    <div>
-      <Link to={`${path}/new`}>Add New Staff</Link>
-      <Link to={`${path}/edit`}>Edit Staff</Link>
-    </div>
-  );
+const mapStateToProps = (state: AppState) => ({
+  staff: state.staffs.staff
+});
+
+const mapDispatchToProps = {
+  getStaff
 };
 
-export default Staffs;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Staffs);

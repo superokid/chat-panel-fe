@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Main from './Main';
-import Side from './Card';
+import Side from './Cards';
 
 const Chat: React.FC = () => {
   return (
