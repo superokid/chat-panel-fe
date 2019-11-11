@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import { getStaff } from 'store/staffs/action';
+import { getStaffs } from 'store/staffs/action';
 import { AppState } from 'store/root-reducer';
 import Staffs from './units';
 
 const mapStateToProps = (state: AppState) => ({
-  staff: state.staffs.staff
+  staffs: state.staffs.staffs
 });
 
 const mapDispatchToProps = {
-  getStaff
+  getStaffs
 };
 
 export default connect(

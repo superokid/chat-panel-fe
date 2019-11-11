@@ -1,15 +1,16 @@
-import { GET_STAFF_SUCCESS, IGetStaffAction } from './type';
+import { GET_STAFFS_SUCCESS, IGetStaffsAction, StaffsState } from './type';
 
-const INITIAL_STATE = {
-  staff: {}
+const INITIAL_STATE: StaffsState = {
+  staffs: [],
+  staff: null
 };
 
-export default (state = INITIAL_STATE, action: IGetStaffAction) => {
+export default (state = INITIAL_STATE, action: IGetStaffsAction) => {
   switch (action.type) {
-    case GET_STAFF_SUCCESS:
+    case GET_STAFFS_SUCCESS:
       return {
         ...state,
-        staff: action.payload
+        staffs: action.payload.data.data
       };
     default:
       return state;
