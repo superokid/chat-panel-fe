@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Switch, Route } from 'react-router-dom';
-import { sidebarRoutes } from 'modules/router';
+import dashboardRoutes from 'modules/router/dashboard';
 import Sidebar from './Layout/Sidebar';
 
 const drawerWidth = 240;
@@ -154,7 +154,7 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
-            {sidebarRoutes.map((item, i) => {
+            {dashboardRoutes.map((item, i) => {
               return <Route key={i} path={item.path} component={item.component} exact />;
             })}
           </Switch>

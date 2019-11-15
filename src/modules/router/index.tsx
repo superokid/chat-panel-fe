@@ -1,8 +1,7 @@
 import Dashboard from 'views/Dashboard';
 import Chat from 'views/Chat';
 import Login from 'views/Login';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import sidebarRoutes from './sidebar';
+import { sidebarRoutes } from './dashboard';
 
 const routes = [
   {
@@ -17,8 +16,7 @@ const routes = [
   {
     path: '/dashboard',
     component: Dashboard,
-    title: 'Dashboard',
-    icon: DashboardIcon
+    title: 'Dashboard'
   }
 ];
 

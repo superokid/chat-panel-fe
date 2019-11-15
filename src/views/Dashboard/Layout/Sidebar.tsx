@@ -13,10 +13,14 @@ const Sidebar = () => {
           <ListItemText primary="Chat" />
         </ListItem>
       </Link>
-      {sidebarRoutes.map(item => (
-        <Link to={`${item.path}`} key={item.title}>
+      {sidebarRoutes.map((item, i) => (
+        <Link to={`${item.path}`} key={i}>
           <ListItem button>
-            <ListItemIcon>{<item.icon />}</ListItemIcon>
+            {item.icon && (
+              <ListItemIcon>
+                <item.icon />
+              </ListItemIcon>
+            )}
             <ListItemText primary={item.title} />
           </ListItem>
         </Link>

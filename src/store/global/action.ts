@@ -1,6 +1,10 @@
-export const error = (err: Error) => (dispatch: any) => {
+export const error = (err: Error) => {
   if ((err || {}).message === 'Network Error') {
-    return null;
+    return {
+      type: 'ERROR'
+    };
   }
-  console.log(err);
+  return {
+    type: 'ERROR'
+  };
 };

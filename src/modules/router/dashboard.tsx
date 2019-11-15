@@ -1,8 +1,16 @@
 import Staffs from 'views/Dashboard/Staffs';
+import StaffsNew from 'views/Dashboard/Staffs/new';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 
-const sidebarRoutes = [
+interface IRoutes {
+  path: string;
+  component: React.FC<any>;
+  title?: string;
+  icon?: any;
+}
+
+const sidebarRoutes: IRoutes[] = [
   {
     path: '/dashboard/staffs',
     component: Staffs,
@@ -23,4 +31,13 @@ const sidebarRoutes = [
   }
 ];
 
-export default sidebarRoutes;
+const dashboardRoutes: IRoutes[] = [
+  ...sidebarRoutes,
+  {
+    path: '/dashboard/staffs/new',
+    component: StaffsNew
+  }
+];
+
+export { sidebarRoutes };
+export default dashboardRoutes;

@@ -11,7 +11,4 @@ const mapDispatchToProps = {
   getStaffs
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Staffs);
+export default connect(mapStateToProps, mapDispatchToProps)(Staffs);

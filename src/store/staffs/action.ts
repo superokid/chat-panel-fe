@@ -1,8 +1,9 @@
+import { Dispatch } from 'redux';
 import { GET_STAFFS_SUCCESS, GET_STAFF_SUCCESS } from './type';
 import { getStaffsApi, getStaffApi } from 'modules/api';
 import { error } from '../global/action';
 
-export const getStaffs = () => async (dispatch: any) => {
+export const getStaffs = () => async (dispatch: Dispatch) => {
   try {
     const res = await getStaffsApi();
     dispatch({
@@ -14,7 +15,7 @@ export const getStaffs = () => async (dispatch: any) => {
   }
 };
 
-export const getStaff = (data: number) => async (dispatch: any) => {
+export const getStaff = (data: number) => async (dispatch: Dispatch) => {
   try {
     const res = await getStaffApi(data);
     dispatch({
