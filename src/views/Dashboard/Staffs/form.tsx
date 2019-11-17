@@ -24,7 +24,7 @@ const form: React.FC<Props> = ({ onSubmit }) => {
   return (
     <Formik
       initialValues={{ name: '', email: '', password: '', roles: [] }}
-      // validationSchema={validation}
+      validationSchema={validation}
       onSubmit={(values, { setSubmitting }) => {
         onSubmit(values);
         setTimeout(() => {

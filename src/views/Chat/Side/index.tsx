@@ -9,13 +9,18 @@ const conversations = [
   {
     name: 'People Name',
     time: '9:53 PM',
-    message: 'message',
+    message: 'message1',
     active: true
   },
   {
     name: 'People Name',
     time: '9:53 PM',
-    message: 'message'
+    message: 'message2'
+  },
+  {
+    name: 'People Name',
+    time: '9:53 PM',
+    message: 'message3'
   }
 ];
 

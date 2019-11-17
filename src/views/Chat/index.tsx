@@ -1,19 +1,41 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import Main from './Main';
-import Side from './Cards';
+import Side from './Side';
+import styled from 'styled-components';
 
 const Chat: React.FC = () => {
   return (
-    <Grid container>
-      <Grid item xs={3}>
+    <Container>
+      <GridSide>
         <Side />
-      </Grid>
-      <Grid item xs={9}>
+      </GridSide>
+      <GridMain>
         <Main />
-      </Grid>
-    </Grid>
+      </GridMain>
+    </Container>
   );
 };
 
 export default Chat;
+
+const Container = styled.div`
+  display: flex;
+`;
+
+const GridSide = styled.div`
+  @media screen and (max-width: 1300px) and (min-width: 1025px) {
+    flex: 35%;
+  }
+  @media screen and (min-width: 1301px) {
+    flex: 40%;
+  }
+`;
+
+const GridMain = styled.div`
+  @media screen and (max-width: 1300px) and (min-width: 1025px) {
+    flex: 65%;
+  }
+  @media screen and (min-width: 1301px) {
+    flex: 60%;
+  }
+`;

@@ -32,11 +32,14 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-  background-color: ${props => props.active && '#ddd'};
+  background-color: ${props => props.active && '#e9ebeb'};
   display: flex;
   align-items: center;
   height: 72px;
   cursor: pointer;
+  &:hover {
+    background-color: #f4f5f5;
+  }
 `;
 
 const ImgWrapper = styled.div`
@@ -54,6 +57,11 @@ const Img = styled.img`
 const Content = styled.div`
   width: 100%;
   padding-right: 1em;
+  height: 100%;
+  border-top: 1px solid #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Head = styled.div`
