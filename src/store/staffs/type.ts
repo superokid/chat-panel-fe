@@ -18,6 +18,13 @@ export interface Staff {
   roles: string[];
 }
 
+export interface IPostStaff {
+  name: string;
+  email: string;
+  password: string;
+  roles: string[];
+}
+
 interface GetStaffsResponse extends Response {
   data: Staff[];
 }
