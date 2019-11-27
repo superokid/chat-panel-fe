@@ -2,22 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  name: string;
-  time: string;
+  name?: string;
+  id: number;
+  phoneNumber: string;
+  actime: Date;
   message: string;
   active?: boolean;
+  onClick: (id: number) => void;
 }
 
-const Card: React.FC<Props> = ({ name, time, message, active }) => {
+const Card: React.FC<Props> = ({ id, phoneNumber, actime, message, active, onClick }) => {
   return (
-    <Container active={active}>
+    <Container active={active} onClick={() => onClick(id)}>
       <ImgWrapper>
         <Img />
       </ImgWrapper>
       <Content>
         <Head>
-          <Title>{name}</Title>
-          <Time>{time}</Time>
+          <Title>{phoneNumber}</Title>
+          <Time>{actime}</Time>
         </Head>
         <Body>{message}</Body>
       </Content>

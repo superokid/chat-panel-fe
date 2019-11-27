@@ -23,19 +23,21 @@ const Container = styled.div`
 `;
 
 const GridSide = styled.div`
+  flex: 40%;
   @media screen and (max-width: 1300px) and (min-width: 1025px) {
     flex: 35%;
   }
   @media screen and (min-width: 1301px) {
-    flex: 40%;
+    flex: 30%;
   }
 `;
 
 const GridMain = styled.div`
+  flex: 60%;
   @media screen and (max-width: 1300px) and (min-width: 1025px) {
     flex: 65%;
   }
   @media screen and (min-width: 1301px) {
-    flex: 60%;
+    flex: 70%;
   }
 `;

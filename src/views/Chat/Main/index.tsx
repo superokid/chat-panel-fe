@@ -17,7 +17,11 @@ const Main: React.FC = () => {
 
 export default Main;
 
-const Container = styled.div<any>`
+interface ContainerProps {
+  imgBg: String;
+}
+
+const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -41,6 +45,6 @@ const Container = styled.div<any>`
     right: 0;
     position: absolute;
     z-index: -1;
-    background-image: url(${props => props.imgBg});
+    background-image: url(${imgBg});
   }
 `;

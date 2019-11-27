@@ -1,14 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { AppState } from 'store/root-reducer';
+import Units from './units';
 
-interface Props {}
+const mapStateToProps = (state: AppState) => ({
+  messages: state.chat.messages
+});
 
-const Content: React.FC<Props> = () => {
-  return <Container>C</Container>;
-};
-
-export default Content;
-
-const Container = styled.div`
-  flex-grow: 1;
-`;
+export default connect(mapStateToProps, null)(Units);
