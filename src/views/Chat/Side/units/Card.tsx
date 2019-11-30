@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 interface Props {
   name?: string;
@@ -12,6 +13,13 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ id, phoneNumber, actime, message, active, onClick }) => {
+  const renderTime = () => {
+    if (moment().diff(actime, 'days') === 0) {
+      return <Time>{moment(actime).format('h:mm A')}</Time>;
+    }
+    return <Time>{moment(actime).format('L')}</Time>;
+  };
+
   return (
     <Container active={active} onClick={() => onClick(id)}>
       <ImgWrapper>
@@ -20,7 +28,7 @@ const Card: React.FC<Props> = ({ id, phoneNumber, actime, message, active, onCli
       <Content>
         <Head>
           <Title>{phoneNumber}</Title>
-          <Time>{actime}</Time>
+          {renderTime()}
         </Head>
         <Body>{message}</Body>
       </Content>

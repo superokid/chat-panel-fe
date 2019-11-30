@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import moment from 'moment';
 
 interface Props {
   item: {
@@ -16,44 +17,58 @@ const Message: React.FC<Props> = ({ item }) => {
       <Bubble>
         <Tail />
         <Text>{message}</Text>
-        {/* <Time>{actime}</Time> */}
+        <Time>{moment(actime).format('h:mm A')}</Time>
       </Bubble>
     </Container>
   );
 };
 
-interface ContainerProps {
+interface TypeProps {
   type: string;
 }
 
 export default Message;
 
-const Container = styled.div<ContainerProps>`
-  position: relative;
-  padding-left: 7.5%;
-  padding-right: 7.5%;
-  align-items: ${props => (props.type === 'in' ? 'flex-start' : 'flex-end')};
-  margin-bottom: 12px;
-`;
-
 const Tail = styled.div`
   content: '';
   position: absolute;
   top: 0;
-  left: -8px;
   width: 0;
   height: 0;
-  border-top: 16px solid #fff;
-  border-left: 16px solid transparent;
 `;
 
 const Bubble = styled.div`
   display: inline-block;
-  background-color: #fff;
   position: relative;
   border-radius: 7px;
   box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
   padding: 6px 63px 8px 9px;
+`;
+
+const Container = styled.div<TypeProps>`
+  display: flex;
+  position: relative;
+  padding-left: 7.5%;
+  padding-right: 7.5%;
+  justify-content: ${({ type }) => (type === 'in' ? 'flex-start' : 'flex-end')};
+  margin-bottom: 12px;
+  ${Tail} {
+    ${({ type }) =>
+      type === 'in'
+        ? `
+      left: -8px;
+      border-left: 16px solid transparent;
+      border-top: 16px solid #fff;
+    `
+        : `
+      right: -8px;
+      border-right: 16px solid transparent;
+      border-top: 16px solid #dcf8c6;
+    `}
+  }
+  ${Bubble} {
+    background-color: ${props => (props.type === 'in' ? '#fff' : '#dcf8c6')};
+  }
 `;
 
 const Text = styled.div`
@@ -65,4 +80,9 @@ const Time = styled.div`
   right: 7px;
   bottom: 3px;
   z-index: 2;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 11px;
+  height: 15px;
+  line-height: 15px;
+  white-space: nowrap;
 `;
