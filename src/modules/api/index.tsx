@@ -8,3 +8,5 @@ export const postStaffApi = (data: IPostStaff) => axios.post(`/v1/staff`, data);
 // chat
 export const getConversationStaffApi = () => axios.get(`/v1/conversation-staff`);
 export const getMessagesApi = (id: number) => axios.get(`/v1/messages/${id}`);
+export const postMessageApi = (body: { conversationId: number; message: string }) =>
+  axios.post(`/v1/messages`, body);

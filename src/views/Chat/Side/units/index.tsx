@@ -8,20 +8,26 @@ import { Conversation } from 'store/chat/type';
 
 interface Props {
   getConversationStaff: () => void;
+  setConversationActive: (conversationId: number) => void;
   getMessages: (id: number) => void;
   conversations: Conversation[];
+  activeConversation: number;
 }
 
-const Side: React.FC<Props> = ({ getConversationStaff, getMessages, conversations }) => {
-  const [activeIndex, setActiveIndex] = useState(-1);
-
+const Side: React.FC<Props> = ({
+  getConversationStaff,
+  setConversationActive,
+  conversations,
+  activeConversation,
+  getMessages
+}) => {
   useEffect(() => {
     getConversationStaff();
   }, [getConversationStaff]);
 
   const handleClick = (val: number) => {
     getMessages(val);
-    setActiveIndex(val);
+    setConversationActive(val);
   };
 
   return (
@@ -43,7 +49,7 @@ const Side: React.FC<Props> = ({ getConversationStaff, getMessages, conversation
         variant="outlined"
       />
       {conversations.map((item, i) => (
-        <Card {...item} key={i} active={activeIndex === item.id} onClick={handleClick} />
+        <Card {...item} key={i} active={activeConversation === item.id} onClick={handleClick} />
       ))}
     </div>
   );

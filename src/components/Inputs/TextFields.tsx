@@ -28,9 +28,12 @@ export const fieldToTextField = ({
   };
 };
 
-export const TextField: React.ComponentType<TextFieldProps> = ({
-  children,
-  ...props
-}: TextFieldProps) => <MuiTextField {...fieldToTextField(props)}>{children}</MuiTextField>;
+export const TextField: React.ComponentType<TextFieldProps> = React.forwardRef(
+  (props: TextFieldProps, ref) => (
+    <MuiTextField ref={ref} {...fieldToTextField(props)}>
+      {props.children}
+    </MuiTextField>
+  )
+);
 
 TextField.displayName = 'FormikMaterialUITextField';

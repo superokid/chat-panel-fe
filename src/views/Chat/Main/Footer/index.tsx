@@ -1,31 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
+import { AppState } from 'store/root-reducer';
+import { postMessage } from 'store/chat/action';
+import Units from './units';
 
-interface Props {}
+const mapStateToProps = (state: AppState) => ({
+  activeConversation: state.chat.activeConversation
+});
 
-const Footer: React.FC<Props> = () => {
-  return (
-    <Container>
-      <TextField
-        label="Type a message"
-        variant="outlined"
-        multiline
-        fullWidth
-        onKeyPress={ev => {
-          if (ev.key === 'Enter' && ev.shiftKey) {
-          } else if (ev.key === 'Enter') {
-            ev.preventDefault();
-          }
-        }}
-      />
-    </Container>
-  );
+const mapDispatchToProps = {
+  postMessage
 };
 
-export default Footer;
-
-const Container = styled.div`
-  background-color: #efefef;
-  padding: 5px 10px;
-`;
+export default connect(mapStateToProps, mapDispatchToProps)(Units);

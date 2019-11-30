@@ -1,6 +1,11 @@
 import { Dispatch } from 'redux';
-import { GET_CONVERSATION_STAFF_SUCCESS, GET_MESSAGES_SUCCESS } from './type';
-import { getConversationStaffApi, getMessagesApi } from 'modules/api';
+import {
+  GET_CONVERSATION_STAFF_SUCCESS,
+  SET_CONVERSATION_ACTIVE_SUCCESS,
+  GET_MESSAGES_SUCCESS,
+  POST_MESSAGE_SUCCESS
+} from './type';
+import { getConversationStaffApi, getMessagesApi, postMessageApi } from 'modules/api';
 import { error } from '../global/action';
 
 export const getConversationStaff = () => async (dispatch: Dispatch) => {
@@ -15,11 +20,36 @@ export const getConversationStaff = () => async (dispatch: Dispatch) => {
   }
 };
 
+export const setConversationActive = (val: number) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({
+      type: SET_CONVERSATION_ACTIVE_SUCCESS,
+      payload: val
+    });
+  } catch (err) {
+    dispatch(error(err));
+  }
+};
+
 export const getMessages = (id: number) => async (dispatch: Dispatch) => {
   try {
     const res = await getMessagesApi(id);
     dispatch({
       type: GET_MESSAGES_SUCCESS,
+      payload: res
+    });
+  } catch (err) {
+    dispatch(error(err));
+  }
+};
+
+export const postMessage = (body: { conversationId: number; message: string }) => async (
+  dispatch: Dispatch
+) => {
+  try {
+    const res = await postMessageApi(body);
+    dispatch({
+      type: POST_MESSAGE_SUCCESS,
       payload: res
     });
   } catch (err) {
