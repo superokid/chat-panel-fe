@@ -24,7 +24,7 @@ const Footer: React.FC<Props> = ({ postMessage, activeConversation }) => {
           if (e.key === 'Enter' && e.shiftKey) {
           } else if (e.key === 'Enter') {
             e.preventDefault();
-            if (!value || !activeConversation) {
+            if (!value || !activeConversation || activeConversation === -1) {
               return;
             }
             postMessage({

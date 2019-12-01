@@ -1,11 +1,13 @@
 import React from 'react';
 import Main from './Main';
 import Side from './Side';
+import ChatListener from './ChatListener';
 import styled from 'styled-components';
 
 const Chat: React.FC = () => {
   return (
     <Container>
+      <ChatListener />
       <GridSide>
         <Side />
       </GridSide>

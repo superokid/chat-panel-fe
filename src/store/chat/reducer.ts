@@ -2,6 +2,7 @@ import {
   GET_CONVERSATION_STAFF_SUCCESS,
   SET_CONVERSATION_ACTIVE_SUCCESS,
   GET_MESSAGES_SUCCESS,
+  SET_MESSAGE_SUCCESS,
   Action,
   ChatState
 } from './type';
@@ -9,7 +10,7 @@ import {
 const INITIAL_STATE: ChatState = {
   conversations: [],
   activeConversation: -1,
-  messages: []
+  messages: {}
 };
 
 export default (state = INITIAL_STATE, action: Action) => {
@@ -27,7 +28,16 @@ export default (state = INITIAL_STATE, action: Action) => {
     case GET_MESSAGES_SUCCESS:
       return {
         ...state,
-        messages: action.payload.data.data
+        messages: {
+          [action.id]: action.payload.data.data
+        }
+      };
+    case SET_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        messages: {
+          [action.id]: [...state.messages[action.id], action.payload]
+        }
       };
     default:
       return state;

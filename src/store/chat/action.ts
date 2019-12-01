@@ -1,11 +1,13 @@
 import { Dispatch } from 'redux';
+import moment from 'moment';
 import {
   GET_CONVERSATION_STAFF_SUCCESS,
   SET_CONVERSATION_ACTIVE_SUCCESS,
   GET_MESSAGES_SUCCESS,
-  POST_MESSAGE_SUCCESS
+  SET_MESSAGE_SUCCESS
 } from './type';
-import { getConversationStaffApi, getMessagesApi, postMessageApi } from 'modules/api';
+import { getConversationStaffApi, getMessagesApi } from 'modules/api';
+import socket from 'modules/socket';
 import { error } from '../global/action';
 
 export const getConversationStaff = () => async (dispatch: Dispatch) => {
@@ -36,7 +38,26 @@ export const getMessages = (id: number) => async (dispatch: Dispatch) => {
     const res = await getMessagesApi(id);
     dispatch({
       type: GET_MESSAGES_SUCCESS,
-      payload: res
+      payload: res,
+      id
+    });
+  } catch (err) {
+    dispatch(error(err));
+  }
+};
+
+export const setMessage = (body: { conversationId: number; message: string }) => async (
+  dispatch: Dispatch
+) => {
+  try {
+    dispatch({
+      type: SET_MESSAGE_SUCCESS,
+      payload: {
+        actime: moment().format(),
+        message: body.message,
+        type: 'out'
+      },
+      id: body.conversationId
     });
   } catch (err) {
     dispatch(error(err));
@@ -47,11 +68,7 @@ export const postMessage = (body: { conversationId: number; message: string }) =
   dispatch: Dispatch
 ) => {
   try {
-    const res = await postMessageApi(body);
-    dispatch({
-      type: POST_MESSAGE_SUCCESS,
-      payload: res
-    });
+    socket.emit('chat message', body);
   } catch (err) {
     dispatch(error(err));
   }

@@ -73,6 +73,7 @@ const Container = styled.div<TypeProps>`
 
 const Text = styled.div`
   display: inline-block;
+  white-space: pre-wrap;
 `;
 
 const Time = styled.div`
