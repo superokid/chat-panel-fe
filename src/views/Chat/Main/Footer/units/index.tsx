@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 
 interface Props {
-  postMessage: (body: { conversationId: number; message: string }) => void;
+  postMessage: (body: { staffId: number; conversationId: number; message: string }) => void;
   activeConversation: number;
 }
 
@@ -27,7 +27,9 @@ const Footer: React.FC<Props> = ({ postMessage, activeConversation }) => {
             if (!value || !activeConversation || activeConversation === -1) {
               return;
             }
+            // TODO
             postMessage({
+              staffId: 3,
               conversationId: activeConversation,
               message: value
             });

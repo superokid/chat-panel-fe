@@ -46,16 +46,18 @@ export const getMessages = (id: number) => async (dispatch: Dispatch) => {
   }
 };
 
-export const setMessage = (body: { conversationId: number; message: string }) => async (
-  dispatch: Dispatch
-) => {
+export const setMessage = (body: {
+  conversationId: number;
+  message: string;
+  type: string;
+}) => async (dispatch: Dispatch) => {
   try {
     dispatch({
       type: SET_MESSAGE_SUCCESS,
       payload: {
         actime: moment().format(),
         message: body.message,
-        type: 'out'
+        type: body.type || 'out'
       },
       id: body.conversationId
     });

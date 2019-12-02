@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import Dropdown from './Dropdown';
 
 interface Props {
   name?: string;
@@ -21,18 +22,21 @@ const Card: React.FC<Props> = ({ id, phoneNumber, actime, message, active, onCli
   };
 
   return (
-    <Container active={active} onClick={() => onClick(id)}>
-      <ImgWrapper>
-        <Img />
-      </ImgWrapper>
-      <Content>
-        <Head>
-          <Title>{phoneNumber}</Title>
-          {renderTime()}
-        </Head>
-        <Body>{message}</Body>
-      </Content>
-    </Container>
+    <Wrapper>
+      <Container active={active} onClick={() => onClick(id)}>
+        <ImgWrapper>
+          <Img />
+        </ImgWrapper>
+        <Content>
+          <Head>
+            <Title>{phoneNumber}</Title>
+            {renderTime()}
+          </Head>
+          <Body>{message}</Body>
+        </Content>
+      </Container>
+      <StyledDropdown />
+    </Wrapper>
   );
 };
 
@@ -41,6 +45,14 @@ export default Card;
 interface ContainerProps {
   active?: boolean;
 }
+
+const Wrapper = styled.div`
+  position: relative;
+`;
+
+const StyledDropdown = styled(Dropdown)`
+  display: none;
+`;
 
 const Container = styled.div<ContainerProps>`
   background-color: ${props => props.active && '#e9ebeb'};
@@ -94,4 +106,7 @@ const Body = styled.div`
   font-size: 13px;
   line-height: 20px;
   min-height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
