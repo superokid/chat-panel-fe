@@ -3,12 +3,15 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ModalAssign from '../../Modal/ModalAssign';
 import styled from 'styled-components';
+import { setModal } from 'store/global/action';
+import { useDispatch } from 'react-redux';
 
 interface Props {}
 
 const Dropdown: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,15 +23,8 @@ const Dropdown: React.FC<Props> = () => {
     setAnchorEl(null);
   };
 
-  const [isOpen, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   return (
     <Container>
-      <ModalAssign isOpen={isOpen} handleClose={() => setOpen(false)} />
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} size="small">
         <ExpandMoreIcon />
       </Button>
@@ -39,7 +35,7 @@ const Dropdown: React.FC<Props> = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleOpen}>Assign</MenuItem>
+        <MenuItem onClick={() => dispatch(setModal(true, 'assign'))}>Assign</MenuItem>
       </Menu>
     </Container>
   );

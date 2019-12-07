@@ -1,9 +1,19 @@
-import { SNACKBAR_CLEAR, SUCCESS, ERROR, GlobalState, IGlobalStateAction } from './type';
+import {
+  SNACKBAR_CLEAR,
+  SUCCESS,
+  ERROR,
+  SET_MODAL_OPEN,
+  SET_MODAL_CLOSE,
+  GlobalState,
+  IGlobalStateAction
+} from './type';
 
 const INITIAL_STATE: GlobalState = {
   snackbarIsOpen: false,
   snackbarType: 'error',
-  snackbarMessage: ''
+  snackbarMessage: '',
+  modalIsOpen: false,
+  modalName: ''
 };
 
 export default (state = INITIAL_STATE, action: IGlobalStateAction) => {
@@ -26,6 +36,17 @@ export default (state = INITIAL_STATE, action: IGlobalStateAction) => {
       return {
         ...state,
         snackbarIsOpen: false
+      };
+    case SET_MODAL_OPEN:
+      return {
+        ...state,
+        modalIsOpen: true,
+        modalName: action.modalName
+      };
+    case SET_MODAL_CLOSE:
+      return {
+        ...state,
+        modalIsOpen: false
       };
     default:
       return state;

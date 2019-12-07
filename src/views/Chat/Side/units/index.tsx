@@ -10,6 +10,7 @@ interface Props {
   getConversationStaff: () => void;
   setConversationActive: (conversationId: number) => void;
   getMessages: (id: number) => void;
+  getStaffs: () => void;
   conversations: Conversation[];
   activeConversation: number;
 }
@@ -19,11 +20,13 @@ const Side: React.FC<Props> = ({
   setConversationActive,
   conversations,
   activeConversation,
-  getMessages
+  getMessages,
+  getStaffs
 }) => {
   useEffect(() => {
     getConversationStaff();
-  }, [getConversationStaff]);
+    getStaffs();
+  }, [getConversationStaff, getStaffs]);
 
   const handleClick = (val: number) => {
     getMessages(val);
