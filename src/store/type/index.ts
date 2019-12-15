@@ -1,6 +1,7 @@
 export interface Response {
   meta: {
     status: number;
+    message: string;
   };
-  error: object[] | null;
+  errors: object[] | null;
 }

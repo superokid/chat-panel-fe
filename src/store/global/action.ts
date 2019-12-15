@@ -14,7 +14,13 @@ export const success = () => {
   };
 };
 
-export const error = (err: Error) => {
+export const error = (err: any) => {
+  if ((err || {}).response.data.meta.message) {
+    return {
+      type: 'ERROR',
+      snackbarMessage: 'Something Error'
+    };
+  }
   if ((err || {}).message === 'Network Error') {
     return {
       type: 'ERROR',
