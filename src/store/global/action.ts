@@ -15,7 +15,7 @@ export const success = () => {
 };
 
 export const error = (err: any) => {
-  if ((err || {}).response.data.meta.message) {
+  if ((err || {}).response.data?.meta.message) {
     return {
       type: 'ERROR',
       snackbarMessage: 'Something Error'
