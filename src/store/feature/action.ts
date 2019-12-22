@@ -7,8 +7,8 @@ export const postAssignStaff = (body: PostAssignStaffParam) => async (dispatch: 
   try {
     await postAssignStaffApi(body);
     dispatch(success());
-    setModal(false);
   } catch (err) {
     dispatch(error(err));
   }
+  dispatch(setModal(false));
 };

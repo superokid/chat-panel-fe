@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { TextField } from 'components/Inputs/TextFields';
 import Card from './Card';
 import { Conversation } from 'store/chat/type';
+import { Formik, Field } from 'formik';
 
 interface Props {
   getConversationStaff: () => void;
@@ -38,22 +40,37 @@ const Side: React.FC<Props> = ({
       <header>
         <Link to="/dashboard">Dashboard ></Link>
       </header>
-      <TextField
-        placeholder="Search"
-        fullWidth
-        margin="normal"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon color="disabled" />
-            </InputAdornment>
-          )
-        }}
-        variant="outlined"
-      />
-      {conversations.map((item, i) => (
-        <Card {...item} key={i} active={activeConversation === item.id} onClick={handleClick} />
-      ))}
+      <Formik initialValues={{ search: '' }} onSubmit={() => {}}>
+        {({ values }) => (
+          <>
+            <Field
+              placeholder="Search"
+              name="search"
+              component={TextField}
+              variant="outlined"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon color="disabled" />
+                  </InputAdornment>
+                )
+              }}
+              margin="normal"
+            />
+            {conversations
+              .filter(item => item.phoneNumber.includes(values.search))
+              .map((item, i) => (
+                <Card
+                  {...item}
+                  key={i}
+                  active={activeConversation === item.id}
+                  onClick={handleClick}
+                />
+              ))}
+          </>
+        )}
+      </Formik>
     </div>
   );
 };
