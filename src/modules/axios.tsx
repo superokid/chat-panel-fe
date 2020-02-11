@@ -10,7 +10,7 @@ const config: AxiosRequestConfig = {
     // 'Access-Control-Allow-Headers':
     //   'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
   },
-  timeout: 120000
+  timeout: 60000
 };
 
 const instance = axios.create(config);

@@ -1,12 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import history from 'modules/router/history';
 import { routes } from 'modules/router';
 import Snackbar from '../components/Snackbar';
 import Modal from '../components/Modal';
 
 const AuthWrapper: React.FC = () => {
   return (
-    <Router>
+    <Router history={history}>
       <Snackbar />
       <Modal />
       <Switch>

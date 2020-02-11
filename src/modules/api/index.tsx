@@ -1,10 +1,14 @@
 import axios from '../axios';
 import { PostAssignStaffParam } from 'store/feature/type';
 import { IPostStaff } from 'store/staffs/type';
+import { LoginParam } from 'store/auth/type';
 
 export const getStaffsApi = () => axios.get(`/v1/staffs`);
 export const getStaffApi = (id: number) => axios.get(`/v1/staff/${id}`);
 export const postStaffApi = (data: IPostStaff) => axios.post(`/v1/staff`, data);
+
+// auth
+export const loginApi = (body: LoginParam) => axios.post(`/v1/login`, body);
 
 // chat
 export const getConversationStaffApi = () => axios.get(`/v1/conversation-staff`);

@@ -1,5 +1,6 @@
 import Staffs from 'views/Dashboard/Staffs';
 import StaffsNew from 'views/Dashboard/Staffs/New';
+import Logout from 'views/Logout';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 
@@ -28,6 +29,11 @@ const sidebarRoutes: IRoutes[] = [
     component: Staffs,
     title: 'Customers',
     icon: PeopleIcon
+  },
+  {
+    path: '/logout',
+    component: Logout,
+    title: 'Logout'
   }
 ];
 
