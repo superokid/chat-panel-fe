@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const config: AxiosRequestConfig = {
-  baseURL: 'http://localhost:8000/messager/api',
+  baseURL: `${process.env.REACT_APP_ORIGIN}/messager/api`,
   headers: {
     // 'Access-Control-Allow-Origin': '*',
     // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET, PUT, PATCH, DELETE',
