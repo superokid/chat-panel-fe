@@ -8,16 +8,18 @@ import axios from 'modules/axios';
 export const login = (data: LoginParam) => async (dispatch: Dispatch) => {
   try {
     const res = await loginApi(data);
-    axios.defaults.headers.common['authorization'] = `Bearer ${res.data.data.token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
     history.push('dashboard');
+    return res;
   } catch (err) {
     dispatch(error(err));
+    return err;
   }
 };
 
 export const logout = () => async (dispatch: Dispatch) => {
   try {
-    axios.defaults.headers.common['authorization'] = '';
+    axios.defaults.headers.common['Authorization'] = '';
     history.push('/');
   } catch (err) {
     dispatch(error(err));
