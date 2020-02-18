@@ -4,6 +4,7 @@ import { postMessage } from 'store/chat/action';
 import Units from './units';
 
 const mapStateToProps = (state: AppState) => ({
+  authId: state.auth.id,
   activeConversation: state.chat.activeConversation
 });
 

@@ -1,7 +1,10 @@
-import { LOGIN_SUCCESS, LoginAction, AuthState } from './type';
+import { LOGIN_SUCCESS, LoginAction, Auth } from './type';
 
-const INITIAL_STATE: AuthState = {
-  auth: null
+const INITIAL_STATE: Auth = {
+  id: undefined,
+  name: undefined,
+  email: undefined,
+  token: undefined
 };
 
 export default (state = INITIAL_STATE, action: LoginAction) => {
@@ -9,7 +12,7 @@ export default (state = INITIAL_STATE, action: LoginAction) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        auth: action.payload.data.data
+        ...action.payload.data.data
       };
     default:
       return state;
