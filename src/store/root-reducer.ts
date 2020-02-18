@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
-import chat from './chat';
+import auth from './auth/reducer';
+import chat from './chat/reducer';
 import global from './global/reducer';
-import staffs from './staffs';
+import staffs from './staffs/reducer';
 
 const rootReducer = combineReducers({
+  auth,
   chat,
   global,
   staffs

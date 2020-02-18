@@ -1,15 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'store';
+import { store, persistor } from 'store';
+import { PersistGate } from 'redux-persist/integration/react';
 import AuthWrapper from './views/AuthWrapper';
-
-const reduxStore = configureStore();
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Provider store={reduxStore}>
-        <AuthWrapper />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AuthWrapper />
+        </PersistGate>
       </Provider>
     </div>
   );

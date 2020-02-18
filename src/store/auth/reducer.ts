@@ -1,7 +1,7 @@
 import { LOGIN_SUCCESS, LoginAction, AuthState } from './type';
 
 const INITIAL_STATE: AuthState = {
-  auth: ''
+  auth: null
 };
 
 export default (state = INITIAL_STATE, action: LoginAction) => {
@@ -9,7 +9,7 @@ export default (state = INITIAL_STATE, action: LoginAction) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        staffs: action.payload.data.data
+        auth: action.payload.data.data
       };
     default:
       return state;

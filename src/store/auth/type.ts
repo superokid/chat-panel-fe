@@ -5,7 +5,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 export interface AuthState {
-  auth: string;
+  auth: Auth | null;
 }
 
 export interface LoginParam {
@@ -13,8 +13,15 @@ export interface LoginParam {
   password: string;
 }
 
+export interface Auth {
+  id: number;
+  name: string;
+  email: string;
+  token: string;
+}
+
 interface LoginResponse extends Response {
-  data: string;
+  data: Auth;
 }
 
 export interface LoginAction {
