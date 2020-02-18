@@ -7,7 +7,7 @@ interface Props {
 
 const ChatListener: React.FC<Props> = ({ setMessage }) => {
   // TODO: auth userId
-  socket.emit('userConnected', 3);
+  socket.emit('userConnected', 1);
 
   socket.on('chat message', (msg: { conversationId: number; message: string; type: string }) => {
     setMessage(msg);
