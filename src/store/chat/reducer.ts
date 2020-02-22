@@ -3,14 +3,22 @@ import {
   SET_CONVERSATION_ACTIVE_SUCCESS,
   GET_MESSAGES_SUCCESS,
   SET_MESSAGE_SUCCESS,
+  GET_INTEGRATION_TOKEN_SUCCESS,
   Action,
   ChatState
 } from './type';
 
 const INITIAL_STATE: ChatState = {
   conversations: [],
-  activeConversation: -1,
-  messages: {}
+  activeConversation: {
+    name: '',
+    id: -1,
+    phoneNumber: '',
+    actime: undefined,
+    message: ''
+  },
+  messages: {},
+  integrationToken: {}
 };
 
 export default (state = INITIAL_STATE, action: Action) => {
@@ -38,6 +46,11 @@ export default (state = INITIAL_STATE, action: Action) => {
         messages: {
           [action.id]: [...state.messages[action.id], action.payload]
         }
+      };
+    case GET_INTEGRATION_TOKEN_SUCCESS:
+      return {
+        ...state,
+        integrationToken: action.payload.data.data
       };
     default:
       return state;

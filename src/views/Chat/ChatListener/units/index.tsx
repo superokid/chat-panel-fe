@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import socket from 'modules/socket';
 
 interface Props {
   authId?: number;
   setMessage: (msg: { conversationId: number; message: string; type: string }) => void;
+  getIntegrationToken: () => void;
 }
 
-const ChatListener: React.FC<Props> = ({ authId, setMessage }) => {
+const ChatListener: React.FC<Props> = ({ authId, setMessage, getIntegrationToken }) => {
+  useEffect(() => {
+    getIntegrationToken();
+  }, [getIntegrationToken]);
+
   if (!authId) {
     throw new Error('no auth Id');
   }

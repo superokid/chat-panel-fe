@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { AppState } from 'store/root-reducer';
-import { postMessage } from 'store/chat/action';
+import { postMessage, postIntegrationMessages } from 'store/chat/action';
 import Units from './units';
 
 const mapStateToProps = (state: AppState) => ({
@@ -9,7 +9,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = {
-  postMessage
+  postMessage,
+  postIntegrationMessages
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Units);

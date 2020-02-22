@@ -4,17 +4,17 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { TextField } from 'components/Inputs/TextFields';
-import Card from './Card';
+import Card, { CardProps } from './Card';
 import { Conversation } from 'store/chat/type';
 import { Formik, Field } from 'formik';
 
 interface Props {
   getConversationStaff: () => void;
-  setConversationActive: (conversationId: number) => void;
+  setConversationActive: (conversationId: CardProps) => void;
   getMessages: (id: number) => void;
   getStaffs: () => void;
   conversations: Conversation[];
-  activeConversation: number;
+  activeConversation: CardProps;
 }
 
 const Side: React.FC<Props> = ({
@@ -30,8 +30,8 @@ const Side: React.FC<Props> = ({
     getStaffs();
   }, [getConversationStaff, getStaffs]);
 
-  const handleClick = (val: number) => {
-    getMessages(val);
+  const handleClick = (val: CardProps) => {
+    getMessages(val.id);
     setConversationActive(val);
   };
 
@@ -62,9 +62,9 @@ const Side: React.FC<Props> = ({
               .filter(item => item.phoneNumber.includes(values.search))
               .map((item, i) => (
                 <Card
-                  {...item}
+                  item={item}
                   key={i}
-                  active={activeConversation === item.id}
+                  active={activeConversation.id === item.id}
                   onClick={handleClick}
                 />
               ))}

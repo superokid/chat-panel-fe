@@ -23,7 +23,7 @@ const instance = axios.create(config);
       const jsonRoot = JSON.parse(root);
       const jsonAuth = JSON.parse(jsonRoot?.auth);
 
-      instance.defaults.headers.Authorization = `Bearer ${jsonAuth?.auth?.token}`;
+      instance.defaults.headers.Authorization = `Bearer ${jsonAuth?.token}`;
     }
   } catch (err) {
     console.log('get localstorage token failed');

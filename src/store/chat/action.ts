@@ -4,10 +4,19 @@ import {
   GET_CONVERSATION_STAFF_SUCCESS,
   SET_CONVERSATION_ACTIVE_SUCCESS,
   GET_MESSAGES_SUCCESS,
-  SET_MESSAGE_SUCCESS
+  SET_MESSAGE_SUCCESS,
+  GET_INTEGRATION_TOKEN_SUCCESS,
+  POST_INTEGRATION_MESSAGES_SUCCESS,
+  SendIntegrationMessagesParam
 } from './type';
-import { getConversationStaffApi, getMessagesApi } from 'modules/api';
-import socket from 'modules/socket';
+import {
+  getConversationStaffApi,
+  getMessagesApi,
+  getIntegrationTokenApi,
+  postIntegrationMessagesApi,
+  postMessageApi
+} from 'modules/api';
+import { CardProps } from 'views/Chat/Side/units/Card';
 import { error } from '../global/action';
 
 export const getConversationStaff = () => async (dispatch: Dispatch) => {
@@ -22,7 +31,7 @@ export const getConversationStaff = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const setConversationActive = (val: number) => async (dispatch: Dispatch) => {
+export const setConversationActive = (val: CardProps) => async (dispatch: Dispatch) => {
   try {
     dispatch({
       type: SET_CONVERSATION_ACTIVE_SUCCESS,
@@ -66,11 +75,41 @@ export const setMessage = (body: {
   }
 };
 
-export const postMessage = (body: { conversationId: number; message: string }) => async (
+export const postMessage = (body: {
+  conversationId: number;
+  message: string;
+  phone: string;
+}) => async (dispatch: Dispatch, getState: any) => {
+  try {
+    const token = getState().chat.integrationToken;
+    // socket.emit('chat message', body);
+    await postMessageApi({ ...body, token: token.access_token });
+  } catch (err) {
+    dispatch(error(err));
+  }
+};
+
+export const getIntegrationToken = () => async (dispatch: Dispatch) => {
+  try {
+    const res = await getIntegrationTokenApi();
+    dispatch({
+      type: GET_INTEGRATION_TOKEN_SUCCESS,
+      payload: res
+    });
+  } catch (err) {
+    dispatch(error(err));
+  }
+};
+
+export const postIntegrationMessages = (body: SendIntegrationMessagesParam) => async (
   dispatch: Dispatch
 ) => {
   try {
-    socket.emit('chat message', body);
+    const res = await postIntegrationMessagesApi(body);
+    dispatch({
+      type: POST_INTEGRATION_MESSAGES_SUCCESS,
+      payload: res
+    });
   } catch (err) {
     dispatch(error(err));
   }

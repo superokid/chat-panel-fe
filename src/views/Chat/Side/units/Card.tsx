@@ -3,17 +3,22 @@ import styled from 'styled-components';
 import moment from 'moment';
 import Dropdown from './Dropdown';
 
-interface Props {
+export interface CardProps {
   name?: string;
   id: number;
   phoneNumber: string;
-  actime: Date;
+  actime?: Date;
   message: string;
-  active?: boolean;
-  onClick: (id: number) => void;
 }
 
-const Card: React.FC<Props> = ({ id, phoneNumber, actime, message, active, onClick }) => {
+interface Props {
+  item: CardProps;
+  active?: boolean;
+  onClick: (val: CardProps) => void;
+}
+
+const Card: React.FC<Props> = ({ item, active, onClick }) => {
+  const { phoneNumber, actime, message } = item;
   const renderTime = () => {
     if (moment().diff(actime, 'days') === 0) {
       return <Time>{moment(actime).format('h:mm A')}</Time>;
@@ -23,7 +28,7 @@ const Card: React.FC<Props> = ({ id, phoneNumber, actime, message, active, onCli
 
   return (
     <Wrapper>
-      <Container active={active} onClick={() => onClick(id)}>
+      <Container active={active} onClick={() => onClick(item)}>
         <ImgWrapper>
           <Img />
         </ImgWrapper>

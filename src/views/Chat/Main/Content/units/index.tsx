@@ -2,18 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Message as IMessage } from 'store/chat/type';
+import { CardProps } from 'views/Chat/Side/units/Card';
 import Message from './Message';
 
 interface Props {
   messages?: { [index: number]: IMessage[] };
-  activeConversation?: number;
+  activeConversation?: CardProps;
 }
 
-const Content: React.FC<Props> = ({ messages = {}, activeConversation = -1 }) => {
+const Content: React.FC<Props> = ({ messages = {}, activeConversation }) => {
+  if (!activeConversation?.id) {
+    return null;
+  }
   return (
     <Scroller>
       <Container>
-        {(messages[activeConversation] || []).map((item, i, arr) => (
+        {(messages[activeConversation.id] || []).map((item, i, arr) => (
           <div key={i}>
             {(i && moment(arr[i - 1].actime).diff(item.actime, 'days') < 0 && (
               <MessageContainer>

@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+import { SendIntegrationMessagesParam } from 'store/chat/type';
+import { CardProps } from 'views/Chat/Side/units/Card';
 
 interface Props {
-  postMessage: (body: { staffId: number; conversationId: number; message: string }) => void;
-  activeConversation: number;
+  postMessage: (body: {
+    staffId: number;
+    conversationId: number;
+    message: string;
+    phone: string;
+  }) => void;
+  activeConversation: CardProps;
+  postIntegrationMessages: (body: SendIntegrationMessagesParam) => void;
 }
 
-const Footer: React.FC<Props> = ({ postMessage, activeConversation }) => {
+const Footer: React.FC<Props> = ({ postMessage, activeConversation, postIntegrationMessages }) => {
   const [value, setValue] = useState('');
   return (
     <Container>
@@ -24,14 +32,15 @@ const Footer: React.FC<Props> = ({ postMessage, activeConversation }) => {
           if (e.key === 'Enter' && e.shiftKey) {
           } else if (e.key === 'Enter') {
             e.preventDefault();
-            if (!value || !activeConversation || activeConversation === -1) {
+            if (!value || !activeConversation.id) {
               return;
             }
             // TODO
             postMessage({
               staffId: 3,
-              conversationId: activeConversation,
-              message: value
+              conversationId: activeConversation.id,
+              message: value,
+              phone: activeConversation.phoneNumber
             });
             setValue('');
           }
