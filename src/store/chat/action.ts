@@ -84,6 +84,15 @@ export const postMessage = (body: {
     const token = getState().chat.integrationToken;
     // socket.emit('chat message', body);
     await postMessageApi({ ...body, token: token.access_token });
+    dispatch({
+      type: SET_MESSAGE_SUCCESS,
+      payload: {
+        actime: moment().format(),
+        message: body.message,
+        type: 'out'
+      },
+      id: body.conversationId
+    });
   } catch (err) {
     dispatch(error(err));
   }

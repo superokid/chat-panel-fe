@@ -5,12 +5,7 @@ import { SendIntegrationMessagesParam } from 'store/chat/type';
 import { CardProps } from 'views/Chat/Side/units/Card';
 
 interface Props {
-  postMessage: (body: {
-    staffId: number;
-    conversationId: number;
-    message: string;
-    phone: string;
-  }) => void;
+  postMessage: (body: { conversationId: number; message: string; phone: string }) => void;
   activeConversation: CardProps;
   postIntegrationMessages: (body: SendIntegrationMessagesParam) => void;
 }
@@ -35,9 +30,7 @@ const Footer: React.FC<Props> = ({ postMessage, activeConversation, postIntegrat
             if (!value || !activeConversation.id) {
               return;
             }
-            // TODO
             postMessage({
-              staffId: 3,
               conversationId: activeConversation.id,
               message: value,
               phone: activeConversation.phoneNumber
