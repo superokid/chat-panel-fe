@@ -24,6 +24,7 @@ export const login = (data: LoginParam) => async (dispatch: Dispatch) => {
 export const logout = () => async (dispatch: Dispatch) => {
   try {
     axios.defaults.headers.common['Authorization'] = '';
+    localStorage.clear();
     history.push('/');
   } catch (err) {
     dispatch(error(err));
