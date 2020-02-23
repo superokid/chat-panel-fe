@@ -71,6 +71,7 @@ export const setMessage = (body: {
       id: body.conversationId
     });
   } catch (err) {
+    console.log(err);
     dispatch(error(err));
   }
 };
