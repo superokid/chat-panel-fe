@@ -3,6 +3,9 @@ import { Provider } from 'react-redux';
 import { store, persistor } from 'store';
 import { PersistGate } from 'redux-persist/integration/react';
 import AuthWrapper from './views/AuthWrapper';
+import { checkStorageVersion } from 'store/version';
+
+checkStorageVersion();
 
 const App: React.FC = () => {
   return (
