@@ -30,7 +30,7 @@ export const error = (err: any) => {
   }
   return {
     type: ERROR,
-    snackbarMessage: 'Something Error'
+    snackbarMessage: JSON.stringify(err)
   };
 };
 

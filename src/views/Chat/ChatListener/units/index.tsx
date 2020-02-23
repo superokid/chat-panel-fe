@@ -10,6 +10,9 @@ interface Props {
 const ChatListener: React.FC<Props> = ({ authId, setMessage, getIntegrationToken }) => {
   useEffect(() => {
     getIntegrationToken();
+    return () => {
+      socket.removeAllListeners();
+    };
   }, [getIntegrationToken]);
 
   if (!authId) {
