@@ -5,6 +5,7 @@ import {
   SET_CONVERSATION_ACTIVE_SUCCESS,
   GET_MESSAGES_SUCCESS,
   SET_MESSAGE_SUCCESS,
+  UPDATE_MESSAGE_SUCCESS,
   GET_INTEGRATION_TOKEN_SUCCESS,
   POST_INTEGRATION_MESSAGES_SUCCESS,
   SendIntegrationMessagesParam
@@ -55,21 +56,31 @@ export const getMessages = (id: number) => async (dispatch: Dispatch) => {
   }
 };
 
-export const setMessage = (body: {
-  conversationId: number;
-  message: string;
-  type: string;
-}) => async (dispatch: Dispatch) => {
+export const setMessage = (body: any) => async (dispatch: Dispatch) => {
   try {
-    dispatch({
-      type: SET_MESSAGE_SUCCESS,
-      payload: {
-        actime: moment().format(),
-        message: body.message,
-        type: body.type || 'out'
-      },
-      id: body.conversationId
-    });
+    if (body.type === 'out' || body.type === 'in') {
+      dispatch({
+        type: SET_MESSAGE_SUCCESS,
+        payload: {
+          actime: moment().format(),
+          message: body.message,
+          type: body.type,
+          waId: body.waId,
+          status: undefined
+        },
+        id: body.conversationId
+      });
+    }
+    if (body.status) {
+      dispatch({
+        type: UPDATE_MESSAGE_SUCCESS,
+        payload: {
+          waId: body.waId,
+          status: body.status
+        },
+        id: body.conversationId
+      });
+    }
   } catch (err) {
     console.log(err);
     dispatch(error(err));
@@ -85,15 +96,15 @@ export const postMessage = (body: {
     const token = getState().chat.integrationToken;
     // socket.emit('chat message', body);
     await postMessageApi({ ...body, token: token.access_token });
-    dispatch({
-      type: SET_MESSAGE_SUCCESS,
-      payload: {
-        actime: moment().format(),
-        message: body.message,
-        type: 'out'
-      },
-      id: body.conversationId
-    });
+    // dispatch({
+    //   type: SET_MESSAGE_SUCCESS,
+    //   payload: {
+    //     actime: moment().format(),
+    //     message: body.message,
+    //     type: 'out'
+    //   },
+    //   id: body.conversationId
+    // });
   } catch (err) {
     dispatch(error(err));
   }

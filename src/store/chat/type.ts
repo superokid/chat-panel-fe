@@ -8,6 +8,7 @@ export const SET_CONVERSATION_ACTIVE_SUCCESS = 'SET_CONVERSATION_ACTIVE_SUCCESS'
 export const GET_MESSAGES_REQUEST = 'GET_MESSAGES_REQUEST';
 export const GET_MESSAGES_SUCCESS = 'GET_MESSAGES_SUCCESS';
 export const SET_MESSAGE_SUCCESS = 'SET_MESSAGE_SUCCESS';
+export const UPDATE_MESSAGE_SUCCESS = 'UPDATE_MESSAGE_SUCCESS';
 export const POST_MESSAGE_SUCCESS = 'POST_MESSAGE_SUCCESS';
 export const GET_INTEGRATION_TOKEN_SUCCESS = 'GET_INTEGRATION_TOKEN_SUCCESS';
 export const POST_INTEGRATION_MESSAGES_SUCCESS = 'POST_INTEGRATION_MESSAGES_SUCCESS';
@@ -30,6 +31,13 @@ export interface Message {
   type: string;
   message: string;
   actime: Date;
+  status?: string;
+  waId?: string;
+}
+
+export interface MessageUpdate {
+  status: string;
+  waId: string;
 }
 
 export interface IntegrationToken {
@@ -72,6 +80,12 @@ export interface SetMessageAction {
   id: number;
 }
 
+export interface UpdateMessageAction {
+  type: typeof UPDATE_MESSAGE_SUCCESS;
+  payload: MessageUpdate;
+  id: number;
+}
+
 export interface GetIntegrationTokenAction {
   type: typeof GET_INTEGRATION_TOKEN_SUCCESS;
   payload: AxiosResponse<GetIntegrationTokenResponse>;
@@ -87,4 +101,5 @@ export type Action =
   | SetConversationActiveAction
   | GetMessagesAction
   | SetMessageAction
+  | UpdateMessageAction
   | GetIntegrationTokenAction;

@@ -3,6 +3,7 @@ import {
   SET_CONVERSATION_ACTIVE_SUCCESS,
   GET_MESSAGES_SUCCESS,
   SET_MESSAGE_SUCCESS,
+  UPDATE_MESSAGE_SUCCESS,
   GET_INTEGRATION_TOKEN_SUCCESS,
   Action,
   ChatState
@@ -44,7 +45,23 @@ export default (state = INITIAL_STATE, action: Action) => {
       return {
         ...state,
         messages: {
-          [action.id]: [...state.messages[action.id], action.payload]
+          [action.id]: [...(state.messages[action.id] || []), action.payload]
+        }
+      };
+    case UPDATE_MESSAGE_SUCCESS:
+      const newState = (state.messages[action.id] || []).map(item => {
+        if (item.waId === action.payload.waId) {
+          return {
+            ...item,
+            status: action.payload.status
+          };
+        }
+        return item;
+      });
+      return {
+        ...state,
+        messages: {
+          [action.id]: newState
         }
       };
     case GET_INTEGRATION_TOKEN_SUCCESS:
