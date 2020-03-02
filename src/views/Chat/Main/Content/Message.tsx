@@ -4,13 +4,14 @@ import moment from 'moment';
 import { Message as MessageProps } from 'store/chat/type';
 import { ReactComponent as IconSent } from 'assets/images/status-sent.svg';
 import { ReactComponent as IconDelivered } from 'assets/images/status-delivered.svg';
+import Image from './Image';
 
 interface Props {
   item: MessageProps;
 }
 
 const Message: React.FC<Props> = ({ item }) => {
-  const { type, message, actime, status } = item || {};
+  const { type, message, image, actime, status } = item || {};
 
   const renderStatus = () => {
     if (status === 'sent') {
@@ -28,6 +29,7 @@ const Message: React.FC<Props> = ({ item }) => {
   return (
     <Container type={type}>
       <Bubble>
+        <Image mediaId={image} />
         <Tail />
         <Text>
           {status === 'deleted' ? <TextDeleted>This message was deleted</TextDeleted> : message}

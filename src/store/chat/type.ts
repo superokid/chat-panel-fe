@@ -30,6 +30,7 @@ export interface Conversation {
 export interface Message {
   type: string;
   message: string;
+  image?: string;
   actime: Date;
   status?: string;
   waId?: string;

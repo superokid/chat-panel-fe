@@ -58,27 +58,29 @@ export const getMessages = (id: number) => async (dispatch: Dispatch) => {
 
 export const setMessage = (body: any) => async (dispatch: Dispatch) => {
   try {
-    if (body.type === 'out' || body.type === 'in') {
+    const { conversationId, message, image, type, waId, status } = body;
+    if (type === 'out' || type === 'in') {
       dispatch({
         type: SET_MESSAGE_SUCCESS,
         payload: {
           actime: moment().format(),
-          message: body.message,
-          type: body.type,
-          waId: body.waId,
+          message,
+          image,
+          type,
+          waId,
           status: undefined
         },
-        id: body.conversationId
+        id: conversationId
       });
     }
-    if (body.status) {
+    if (status) {
       dispatch({
         type: UPDATE_MESSAGE_SUCCESS,
         payload: {
-          waId: body.waId,
-          status: body.status
+          waId,
+          status
         },
-        id: body.conversationId
+        id: conversationId
       });
     }
   } catch (err) {

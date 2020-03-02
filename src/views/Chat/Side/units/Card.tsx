@@ -8,7 +8,8 @@ export interface CardProps {
   id: number;
   phoneNumber: string;
   actime?: Date;
-  message: string;
+  message?: string;
+  image?: string;
 }
 
 interface Props {

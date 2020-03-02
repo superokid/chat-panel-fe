@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import socket from 'modules/socket';
+import { Message } from 'store/chat/type';
 
 interface Props {
   authId?: number;
-  setMessage: (msg: { conversationId: number; message: string; type: string }) => void;
+  setMessage: (msg: Message) => void;
   getIntegrationToken: () => void;
 }
 
@@ -20,7 +21,7 @@ const ChatListener: React.FC<Props> = ({ authId, setMessage, getIntegrationToken
   }
   socket.emit('userConnected', authId);
 
-  socket.on('chat message', (msg: { conversationId: number; message: string; type: string }) => {
+  socket.on('chat message', (msg: Message) => {
     setMessage(msg);
   });
   return null;
