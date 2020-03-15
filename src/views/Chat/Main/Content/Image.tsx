@@ -27,7 +27,7 @@ const Image: React.FC<Props> = ({ mediaId }) => {
     if (mediaId) {
       getMedia();
     }
-  }, []);
+  }, [mediaId]);
 
   if (imageData) {
     return (

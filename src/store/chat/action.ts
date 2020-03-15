@@ -89,11 +89,18 @@ export const setMessage = (body: any) => async (dispatch: Dispatch) => {
   }
 };
 
-export const postMessage = (body: {
+export interface PostMessageParam {
   conversationId: number;
-  message: string;
+  message?: string;
+  mediaId?: string;
+  fileType?: string;
   phone: string;
-}) => async (dispatch: Dispatch, getState: any) => {
+}
+
+export const postMessage = (body: PostMessageParam) => async (
+  dispatch: Dispatch,
+  getState: any
+) => {
   try {
     const token = getState().chat.integrationToken;
     // socket.emit('chat message', body);
@@ -104,7 +111,7 @@ export const postMessage = (body: {
       payload: {
         actime: moment().format(),
         message: body.message,
-        waId: res.data.waId,
+        waId: res.data.data.waId,
         type: 'out'
       },
       id: body.conversationId
