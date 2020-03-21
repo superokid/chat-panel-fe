@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Message: React.FC<Props> = ({ item }) => {
-  const { type, message, image, actime, status } = item || {};
+  const { type, message, mediaId, actime, status } = item || {};
 
   const renderStatus = () => {
     if (status === 'sent') {
@@ -29,7 +29,7 @@ const Message: React.FC<Props> = ({ item }) => {
   return (
     <Container type={type}>
       <Bubble>
-        <Image mediaId={image} />
+        <Image mediaId={mediaId} />
         <Tail />
         <Text>
           {status === 'deleted' ? <TextDeleted>This message was deleted</TextDeleted> : message}
