@@ -4,7 +4,7 @@ import { Message } from 'store/chat/type';
 
 interface Props {
   authId?: number;
-  setMessage: (msg: Message) => void;
+  setMessage: (msg: Message & { conversationId: number }) => void;
   getIntegrationToken: () => void;
 }
 
@@ -21,7 +21,7 @@ const ChatListener: React.FC<Props> = ({ authId, setMessage, getIntegrationToken
   }
   socket.emit('userConnected', authId);
 
-  socket.on('chat message', (msg: Message) => {
+  socket.on('chat message', (msg: Message & { conversationId: number }) => {
     setMessage(msg);
   });
   return null;

@@ -36,7 +36,7 @@ const Message: React.FC<Props> = ({ item }) => {
         <Text>
           {status === 'deleted' ? <TextDeleted>This message was deleted</TextDeleted> : message}
         </Text>
-        <StatusContainer isMediaWithMessage={Boolean(!message && mediaId)}>
+        <StatusContainer isImageWithMessage={!message && mediaType === 'image'}>
           <Time>{moment(actime).format('h:mm A')}</Time>
           <Status status={status}>{renderStatus()}</Status>
         </StatusContainer>
@@ -50,7 +50,7 @@ interface TypeProps {
 }
 
 interface StatusContainerProps {
-  isMediaWithMessage: boolean;
+  isImageWithMessage: boolean;
 }
 
 interface StatusProps {
@@ -99,14 +99,19 @@ const StatusContainer = styled.div<StatusContainerProps>`
   margin: -10px 0 -2px 4px;
   display: flex;
   ${props =>
-    props.isMediaWithMessage &&
+    props.isImageWithMessage &&
     `
     position: absolute;
     right: 10px;
     bottom: 13px;
     color: #fff;
-  `} && ${Time} {
-    color: #fff;
+  `}
+  ${Time} {
+    ${props =>
+      props.isImageWithMessage &&
+      `
+      color: #fff;
+    `}
   }
 `;
 

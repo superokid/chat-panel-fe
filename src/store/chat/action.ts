@@ -8,7 +8,8 @@ import {
   UPDATE_MESSAGE_SUCCESS,
   GET_INTEGRATION_TOKEN_SUCCESS,
   POST_INTEGRATION_MESSAGES_SUCCESS,
-  SendIntegrationMessagesParam
+  SendIntegrationMessagesParam,
+  Message
 } from './type';
 import {
   getConversationStaffApi,
@@ -57,18 +58,17 @@ export const getMessages = (id: number) => async (dispatch: Dispatch) => {
   }
 };
 
-export const setMessage = (body: any) => async (dispatch: Dispatch) => {
+export const setMessage = (body: Message & { conversationId: number }) => async (
+  dispatch: Dispatch
+) => {
   try {
-    const { conversationId, message, image, type, waId, status } = body;
+    const { conversationId, type, waId, status } = body;
     if (type === 'out' || type === 'in') {
       dispatch({
         type: SET_MESSAGE_SUCCESS,
         payload: {
+          ...body,
           actime: moment().format(),
-          message,
-          image,
-          type,
-          waId,
           status: undefined
         },
         id: conversationId
