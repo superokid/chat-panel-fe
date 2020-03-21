@@ -28,9 +28,10 @@ export interface Conversation {
 }
 
 export interface Message {
-  type: string;
+  type: 'in' | 'out';
   message: string;
   mediaId?: string;
+  mediaType?: string;
   actime: Date;
   status?: string;
   waId?: string;

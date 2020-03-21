@@ -28,6 +28,12 @@ export const error = (err: any) => {
       snackbarMessage: 'Network Error'
     };
   }
+  if (err?.response && err.response.status > 400 && err.response.status < 500) {
+    return {
+      type: ERROR,
+      snackbarMessage: err.response.statusText
+    };
+  }
   return {
     type: ERROR,
     snackbarMessage: JSON.stringify(err)

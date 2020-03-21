@@ -19,6 +19,7 @@ import {
 } from 'modules/api';
 import { CardProps } from 'views/Chat/Side/units/Card';
 import { error } from '../global/action';
+import fileTypeToMediaType from 'helpers/fileTypeToMediaType';
 
 export const getConversationStaff = () => async (dispatch: Dispatch) => {
   try {
@@ -93,7 +94,7 @@ export interface PostMessageParam {
   conversationId: number;
   message?: string;
   mediaId?: string;
-  fileType?: string;
+  fileType?: string; // mime
   phone: string;
 }
 
@@ -112,6 +113,8 @@ export const postMessage = (body: PostMessageParam) => async (
         actime: moment().format(),
         message: body.message,
         waId: res.data.data.waId,
+        mediaId: body.mediaId,
+        mediaType: fileTypeToMediaType(body.fileType),
         type: 'out'
       },
       id: body.conversationId

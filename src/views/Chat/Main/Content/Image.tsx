@@ -24,10 +24,10 @@ const Image: React.FC<Props> = ({ mediaId }) => {
   };
 
   useEffect(() => {
-    if (mediaId) {
+    if (mediaId && accessToken) {
       getMedia();
     }
-  }, [mediaId]);
+  }, [mediaId, accessToken]);
 
   if (imageData) {
     return (

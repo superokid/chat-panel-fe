@@ -5,13 +5,14 @@ import { Message as MessageProps } from 'store/chat/type';
 import { ReactComponent as IconSent } from 'assets/images/status-sent.svg';
 import { ReactComponent as IconDelivered } from 'assets/images/status-delivered.svg';
 import Image from './Image';
+import Media from './Media';
 
 interface Props {
   item: MessageProps;
 }
 
 const Message: React.FC<Props> = ({ item }) => {
-  const { type, message, mediaId, actime, status } = item || {};
+  const { type, message, mediaId, mediaType, actime, status } = item || {};
 
   const renderStatus = () => {
     if (status === 'sent') {
@@ -29,12 +30,13 @@ const Message: React.FC<Props> = ({ item }) => {
   return (
     <Container type={type}>
       <Bubble>
-        <Image mediaId={mediaId} />
+        {mediaType === 'image' && <Image mediaId={mediaId} />}
+        {mediaType === 'document' && <Media mediaId={mediaId} type={type} />}
         <Tail />
         <Text>
           {status === 'deleted' ? <TextDeleted>This message was deleted</TextDeleted> : message}
         </Text>
-        <StatusContainer>
+        <StatusContainer isMediaWithMessage={Boolean(!message && mediaId)}>
           <Time>{moment(actime).format('h:mm A')}</Time>
           <Status status={status}>{renderStatus()}</Status>
         </StatusContainer>
@@ -45,6 +47,10 @@ const Message: React.FC<Props> = ({ item }) => {
 
 interface TypeProps {
   type: string;
+}
+
+interface StatusContainerProps {
+  isMediaWithMessage: boolean;
 }
 
 interface StatusProps {
@@ -80,18 +86,28 @@ const TextDeleted = styled.span`
   font-size: 14.2px;
 `;
 
-const StatusContainer = styled.div`
-  float: right;
-  margin: -10px 0 -2px 4px;
-  display: flex;
-`;
-
 const Time = styled.div`
   color: rgba(0, 0, 0, 0.45);
   font-size: 11px;
   line-height: 15px;
   white-space: nowrap;
   display: inline-block;
+`;
+
+const StatusContainer = styled.div<StatusContainerProps>`
+  float: right;
+  margin: -10px 0 -2px 4px;
+  display: flex;
+  ${props =>
+    props.isMediaWithMessage &&
+    `
+    position: absolute;
+    right: 10px;
+    bottom: 13px;
+    color: #fff;
+  `} && ${Time} {
+    color: #fff;
+  }
 `;
 
 const Status = styled.div<StatusProps>`
