@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 interface Props {}
 
-const Dropdown: React.FC<Props> = () => {
+const Dropdown: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,7 +24,7 @@ const Dropdown: React.FC<Props> = () => {
   };
 
   return (
-    <Container>
+    <Container {...props}>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} size="small">
         <ExpandMoreIcon />
       </Button>

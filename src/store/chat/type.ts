@@ -25,6 +25,7 @@ export interface Conversation {
   phoneNumber: string;
   message: string;
   actime: Date;
+  unread: number;
 }
 
 export interface Message {

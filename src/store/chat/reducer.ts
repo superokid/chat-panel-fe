@@ -27,26 +27,51 @@ export default (state = INITIAL_STATE, action: Action) => {
     case GET_CONVERSATION_STAFF_SUCCESS:
       return {
         ...state,
-        conversations: action.payload.data.data
+        conversations: action.payload.data.data.map(item => {
+          return { ...item, unread: 0 };
+        })
       };
     case SET_CONVERSATION_ACTIVE_SUCCESS:
       return {
         ...state,
-        activeConversation: action.payload
+        activeConversation: action.payload,
+        conversations: [
+          ...state.conversations.map(item => {
+            if (item.id === action.payload.id) {
+              return { ...item, unread: 0 };
+            }
+            return item;
+          })
+        ]
       };
     case GET_MESSAGES_SUCCESS:
       return {
         ...state,
         messages: {
-          [action.id]: action.payload.data.data
+          ...state.messages,
+          [action.id]: action.payload.data.data.map(item => {
+            if (item.type === 'in') {
+              return { ...item, status: 'read' };
+            }
+            return item;
+          })
         }
       };
     case SET_MESSAGE_SUCCESS:
       return {
         ...state,
         messages: {
+          ...state.messages,
           [action.id]: [...(state.messages[action.id] || []), action.payload]
-        }
+        },
+        conversations: [
+          ...state.conversations.map(item => {
+            if (item.id === action.id) {
+              return { ...item, unread: item.unread + 1 };
+            }
+            return item;
+          })
+        ]
       };
     case UPDATE_MESSAGE_SUCCESS:
       const newState = (state.messages[action.id] || []).map(item => {

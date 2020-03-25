@@ -7,6 +7,7 @@ export interface CardProps {
   name?: string;
   id: number;
   phoneNumber: string;
+  unread?: number;
   actime?: Date;
   message?: string;
   image?: string;
@@ -19,7 +20,7 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ item, active, onClick }) => {
-  const { phoneNumber, actime, message } = item;
+  const { phoneNumber, actime, message, unread } = item;
   const renderTime = () => {
     if (moment().diff(actime, 'days') === 0) {
       return <Time>{moment(actime).format('h:mm A')}</Time>;
@@ -33,15 +34,20 @@ const Card: React.FC<Props> = ({ item, active, onClick }) => {
         <ImgWrapper>
           <Img />
         </ImgWrapper>
-        <Content>
+        <Content unread={!!unread}>
           <Head>
             <Title>{phoneNumber}</Title>
             {renderTime()}
           </Head>
-          <Body>{message}</Body>
+          <Body>
+            {message}
+            <StatusContainer>
+              <div>{!!unread && <Counter>{unread}</Counter>}</div>
+              <StyledDropdown />
+            </StatusContainer>
+          </Body>
         </Content>
       </Container>
-      <StyledDropdown />
     </Wrapper>
   );
 };
@@ -60,6 +66,20 @@ const StyledDropdown = styled(Dropdown)`
   display: none;
 `;
 
+const StatusContainer = styled.div`
+  transition: all 0.2s;
+  display: flex;
+`;
+
+const Counter = styled.span`
+  background-color: #06d755;
+  color: #fff;
+  padding: 0.2em 0.4em;
+  border-radius: 1.1em;
+  text-align: center;
+  font-size: 12px;
+`;
+
 const Container = styled.div<ContainerProps>`
   background-color: ${props => props.active && '#e9ebeb'};
   display: flex;
@@ -68,6 +88,12 @@ const Container = styled.div<ContainerProps>`
   cursor: pointer;
   &:hover {
     background-color: #f4f5f5;
+    ${StyledDropdown} {
+      display: block;
+    }
+    ${StatusContainer} {
+      margin-right: 2.2em;
+    }
   }
 `;
 
@@ -83,29 +109,9 @@ const Img = styled.img`
   border-radius: 50%;
 `;
 
-const Content = styled.div`
-  width: 100%;
-  padding-right: 1em;
-  height: 100%;
-  border-top: 1px solid #f2f2f2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Head = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Title = styled.div``;
-
-const Time = styled.div`
-  margin-top: 3px;
-  margin-left: 6px;
-  color: rgba(0, 0, 0, 0.4);
-  font-size: 12px;
-`;
+interface ContentProps {
+  unread: boolean;
+}
 
 const Body = styled.div`
   margin-top: 2px;
@@ -116,3 +122,35 @@ const Body = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
+
+const Time = styled.div`
+  margin-top: 3px;
+  margin-left: 6px;
+
+  font-size: 12px;
+  font-weight: normal;
+`;
+
+const Content = styled.div<ContentProps>`
+  width: 100%;
+  padding-right: 1em;
+  height: 100%;
+  border-top: 1px solid #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: ${props => (props.unread ? 'bold' : 'normal')};
+  ${Body} {
+    color: ${props => (props.unread ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.6)')};
+  }
+  ${Time} {
+    color: ${props => (props.unread ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.4)')};
+  }
+`;
+
+const Head = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Title = styled.div``;
