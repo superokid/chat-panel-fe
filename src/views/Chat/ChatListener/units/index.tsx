@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import socket from 'modules/socket';
+import io from 'socket.io-client';
 import { Message } from 'store/chat/type';
 
 interface Props {
@@ -9,6 +9,8 @@ interface Props {
 }
 
 const ChatListener: React.FC<Props> = ({ authId, setMessage, getIntegrationToken }) => {
+  const socket = io(`${process.env.REACT_APP_ORIGIN}`, { path: '/chat' });
+
   useEffect(() => {
     getIntegrationToken();
     return () => {
@@ -19,10 +21,17 @@ const ChatListener: React.FC<Props> = ({ authId, setMessage, getIntegrationToken
   if (!authId) {
     throw new Error('no auth Id');
   }
-  socket.emit('userConnected', authId);
 
   socket.on('chat message', (msg: Message & { conversationId: number }) => {
     setMessage(msg);
+  });
+
+  socket.on('connect', () => {
+    socket.emit('userConnected', authId);
+  });
+
+  socket.on('disconnect', (cause: string) => {
+    console.log(cause, 'reconnect');
   });
   return null;
 };
