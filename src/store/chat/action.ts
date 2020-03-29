@@ -8,6 +8,7 @@ import {
   UPDATE_MESSAGE_SUCCESS,
   GET_INTEGRATION_TOKEN_SUCCESS,
   POST_INTEGRATION_MESSAGES_SUCCESS,
+  SET_READ,
   SendIntegrationMessagesParam,
   Message
 } from './type';
@@ -148,4 +149,13 @@ export const postIntegrationMessages = (body: SendIntegrationMessagesParam) => a
   } catch (err) {
     dispatch(error(err));
   }
+};
+
+export const setRead = () => (dispatch: Dispatch, getState: any) => {
+  const { id } = getState().chat.activeConversation;
+
+  dispatch({
+    type: SET_READ,
+    payload: id
+  });
 };

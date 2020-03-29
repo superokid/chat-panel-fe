@@ -12,6 +12,7 @@ export const UPDATE_MESSAGE_SUCCESS = 'UPDATE_MESSAGE_SUCCESS';
 export const POST_MESSAGE_SUCCESS = 'POST_MESSAGE_SUCCESS';
 export const GET_INTEGRATION_TOKEN_SUCCESS = 'GET_INTEGRATION_TOKEN_SUCCESS';
 export const POST_INTEGRATION_MESSAGES_SUCCESS = 'POST_INTEGRATION_MESSAGES_SUCCESS';
+export const SET_READ = 'SET_READ';
 
 export interface ChatState {
   conversations: Conversation[];
@@ -99,10 +100,16 @@ export interface SendIntegrationMessagesParam {
   id: number;
 }
 
+export interface SetReadAction {
+  type: typeof SET_READ;
+  payload: number;
+}
+
 export type Action =
   | GetConversationStaffAction
   | SetConversationActiveAction
   | GetMessagesAction
   | SetMessageAction
   | UpdateMessageAction
-  | GetIntegrationTokenAction;
+  | GetIntegrationTokenAction
+  | SetReadAction;

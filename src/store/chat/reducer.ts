@@ -5,6 +5,7 @@ import {
   SET_MESSAGE_SUCCESS,
   UPDATE_MESSAGE_SUCCESS,
   GET_INTEGRATION_TOKEN_SUCCESS,
+  SET_READ,
   Action,
   ChatState
 } from './type';
@@ -44,6 +45,16 @@ export default (state = INITIAL_STATE, action: Action) => {
           })
         ]
       };
+    case SET_READ:
+      return {
+        ...state,
+        conversations: state.conversations.map(item => {
+          if (item.id === action.payload) {
+            return { ...item, unread: 0 };
+          }
+          return item;
+        })
+      };
     case GET_MESSAGES_SUCCESS:
       return {
         ...state,
@@ -64,14 +75,16 @@ export default (state = INITIAL_STATE, action: Action) => {
           ...state.messages,
           [action.id]: [...(state.messages[action.id] || []), action.payload]
         },
-        conversations: [
-          ...state.conversations.map(item => {
-            if (item.id === action.id) {
-              return { ...item, unread: item.unread + 1 };
-            }
-            return item;
-          })
-        ]
+        ...(action.payload.type === 'in' && {
+          conversations: [
+            ...state.conversations.map(item => {
+              if (item.id === action.id) {
+                return { ...item, unread: item.unread + 1 };
+              }
+              return item;
+            })
+          ]
+        })
       };
     case UPDATE_MESSAGE_SUCCESS:
       const newState = (state.messages[action.id] || []).map(item => {

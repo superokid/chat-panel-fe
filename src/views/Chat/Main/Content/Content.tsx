@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Message as IMessage } from 'store/chat/type';
@@ -8,14 +8,32 @@ import Message from './Message';
 interface Props {
   messages?: { [index: number]: IMessage[] };
   activeConversation?: CardProps;
+  setRead: () => void;
 }
 
-const Content: React.FC<Props> = ({ messages = {}, activeConversation }) => {
+const Content: React.FC<Props> = ({ messages = {}, activeConversation, setRead }) => {
+  const refScroller = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    refScroller?.current?.addEventListener('scroll', handleScroll);
+    return () => {
+      refScroller?.current?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = (e: any) => {
+    // reach end
+    // TODO: debounce
+    if (e.target.scrollTop === e.target.scrollHeight - e.target.offsetHeight) {
+      setRead();
+    }
+  };
+
   if (!activeConversation?.id) {
     return null;
   }
+
   return (
-    <Scroller>
+    <Scroller ref={refScroller}>
       <Container>
         {(messages[activeConversation.id] || []).map((item, i, arr) => (
           <div key={i}>
